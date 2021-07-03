@@ -17,27 +17,34 @@
 	<script type="text/javascript" src="js/react.js"></script>
 	<script type="text/javascript" src="js/react-dom.js"></script>
 
-
 </head>
 <body>
-	<div id="content"></div>
-	<script type="text/javascript">
-		var h1 = React.createElement(
-			'h1',     // elementName
-			null,     // data
-			'ArchCad' // child
-		)
 
-		var link2github = React.createElement(
-			'a',
-			{ href: 'http://www.github.com/timurkashapov' },
-			'www.github.com/'
-		)
+	<div>
+		<input type="date" name="date">
+	</div>
+
+	<div id="content"></div>
+	<!-- <script type="text/javascript" src="component/ArchCad.js"></script> -->
+	<script type="text/javascript">
+
+		let h1 = React.createElement('h1', null, 'ArchCad')
+
+		class ArchCad extends React.Component {
+			render() {
+				return React.createElement('div', null, h1, h1, h1)
+			}
+		}
 
 		ReactDOM.render(
-			React.createElement('div', null, h1, link2github),
+			React.createElement(ArchCad, { name: 'ArchCad' }),
 			document.getElementById('content')
 		)
+		
+		console.log(document.querySelector('input').value);
+		console.log(document.getElementById('picker'));
+
 	</script>
+
 </body>
 </html>
