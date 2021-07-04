@@ -3,4 +3,3 @@ class ArchCad extends React.Component {
 	render() {
 		return React.createElement('div', null, h1, h1)
 	}
-}

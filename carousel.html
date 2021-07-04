@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>carousel</title>
+
+	<script type="text/javascript">
+		class GGalleryCarousel extends HTMLElement {
+
+			connectedCallback() {
+
+				this._photoIndex = 1;
+				this._photos = this.getAttribute('photos').split(', ');
+
+				this.innerHTML = '<div><h1>' + this.getAttribute('title') + '</h1></div>' +
+				                 '<div><h2>' + 'by' + ' ' + this.getAttribute('autor') + '</h2></div>' +
+				                 '<div class="l-content-images"></div>' +
+				                 '<button class="l-btn-back">&lt</button>' +
+				                 '<button class="l-btn-forward">&gt</button>'
+
+				this.showPhoto();
+
+				this.querySelector('.l-btn-back').addEventListener('click', event => this.onBackBtnClick(event));
+				
+				this.querySelector('.l-btn-forward').addEventListener('click', event => this.onForwardBtnClick(event));
+			}
+
+			showPhoto() {
+				this.querySelector('.l-content-images').style.backgroundImage = 'url' + '(' + this._photos[this._photoIndex] + ')';
+			}
+
+			onBackBtnClick(event) {
+				this._photoIndex --;
+				if (this._photoIndex < 0) {
+					this._photoIndex = this._photos.length - 1;
+				}
+				this.showPhoto();
+			}
+
+			onForwardBtnClick(event) {
+				this._photoIndex ++;
+				if (this._photoIndex >= this._photos.length) {
+					this._photoIndex = 0;
+				}
+				this.showPhoto();
+			}
+		}
+
+		if (!customElements.get('g-gallery-carousel')) {
+			customElements.define('g-gallery-carousel', GGalleryCarousel);
+		}
+	</script>
+
+	<style>
+
+	    g-gallery-carousel {
+	    	width: 900px;
+	    	height: 600px;
+	    	display: flex;
+	    	flex-direction: column;
+			padding-top:  9px;
+			border-color: black;
+			border-width: 1px;
+			border-style: solid;
+			position: relative;
+		}
+
+		h1, h2 {
+			margin-left: 9px;
+		}
+		
+		g-gallery-carousel .l-content-images {
+			margin-top: 15px;
+			flex: 1;
+			background-color: black;
+			background-size: contain;
+			background-repeat: no-repeat;
+			background-position: 50%;
+		}
+
+		g-gallery-carousel button {
+			cursor: pointer;
+			background: transparent;
+			border: none;
+			font-size: 48px;
+			color: white;
+			position: absolute;
+			top: 50%;
+		}
+
+		.l-btn-back {
+			left: 9px;
+		}
+
+		.l-btn-forward {
+			right: 9px;
+		} 
+
+	</style>
+</head>
+<body>
+	<g-gallery-carousel
+	    title="Global Gallery Carousel"
+	    autor="Timur Kashapov"
+	    photos="images/com.png, images/fluck.png, images/ok.jpeg"
+	></g-gallery-carousel>
+</body>
+</html>

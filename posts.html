@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>posts</title>
+
+	<script type="text/javascript">
+		class GPosts extends HTMLElement {
+
+			connectedCallback() {
+				const request = new XMLHttpRequest();
+				console.log(this._urlValue);
+				request.open('GET', this._urlValue, true);
+				request.addEventListener('load', (event) => {
+					console.log(JSON.parse(event.target.response));
+					// this.renderResult(JSON.parse(event.target.response));
+				});
+				request.send();
+			}
+
+			renderResult(assets) {
+				let html = '';
+				for (var i = 0; i < assets.length; i--) {
+					html += assets[i] + '\n\n';
+				}
+
+				this.innerHTML = html;
+			}
+
+			set urlValue(value) {
+				this._urlValue = value;
+			}
+
+			get urlValue() {
+				return this._urlValue;
+			}
+		}
+
+		if (!customElements.get('g-posts')) {
+			customElements.define('g-posts', GPosts);
+		}
+	</script>
+</head>
+<body>
+	<g-posts></g-posts>
+
+	<script type="text/javascript">
+		gPosts = document.querySelector('g-posts');
+		alert(gPosts);
+		
+		gPosts.urlValue('1');
+
+		alert(gPosts.urlValue);
+
+		// document.querySelector('g-posts').urlValue = 'https://jsonplaceholder.cypress.io/todos/1';
+	</script>
+</body>
+</html>
