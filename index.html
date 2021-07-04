@@ -24,6 +24,12 @@
 		<input type="date" name="date">
 	</div>
 
+	<div>
+		<canvas/>
+	</div>
+
+	<random-element>Hi!</random-element>
+
 	<div id="content"></div>
 	<!-- <script type="text/javascript" src="component/ArchCad.js"></script> -->
 	<script type="text/javascript">
@@ -40,10 +46,14 @@
 			React.createElement(ArchCad, { name: 'ArchCad' }),
 			document.getElementById('content')
 		)
-		
-		console.log(document.querySelector('input').value);
-		console.log(document.getElementById('picker'));
 
+		console.log(document.createElement('random-element').constructor);
+
+		if (!customElements.get('cstm-elem')) {
+			customElements.define('cstm-elem', class extends HTMLDivElement {});
+		}
+		
+		
 	</script>
 
 </body>
